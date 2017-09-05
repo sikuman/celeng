@@ -1,7 +1,8 @@
 <?php
+	ini_set('memory_limit', '-1');
 // header( "Content-type: text/xml" ); 
 	$f = "xml"; // $_POST[format]
-	$ms = 2000000; // max size
+	$ms = 10; // max size
 	$files2= file('keywords/keywords.txt' );
 	$priority = "0.5" ;
 	$lastmodified =  date( 'c' );
@@ -23,19 +24,22 @@
 	$baselen = strlen($sitemap_header) + strlen($sitemap_footer);
 
 	$sitemap_urls_string = "";
-	$start =0;
 	$arraystrreplace= array("&"," ");
-	$singletxt = array_slice($files2,$start,$ms);
+	$singletxt = array_chunk($files2,$ms);
+	$page_numbers = range(1,count($singletxt));
+	echo $page_numbers;
+	
 	$strreplace = str_replace($arraystrreplace,"-",$singletxt); 
 	foreach ($strreplace as $word){
 			echo var_dump($word)."<br>";
 
 		$sitemap_url_string = "$prefix_string$path_kb$slug$word"."$postfix_string";
-		if (strlen($sitemap_urls_string) + strlen($sitemap_url_string) + $baselen > $ms)
-		{
-			writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f, $fn);
-			$sitemap_urls_string = "";
-		}
+		// if (strlen($sitemap_urls_string) + strlen($sitemap_url_string) + $baselen > $ms)
+		// if (!in_array($))	
+		// {
+			// writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f, $fn);
+			// $sitemap_urls_string = "";
+		// }
 		$sitemap_urls_string .= $sitemap_url_string;
 	}
 
