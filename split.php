@@ -24,17 +24,32 @@
 $arraystrreplace= array("&"," ");
 $singletxt = array($files_name);
 $strreplace = str_replace($arraystrreplace,"-",$files_name); 
-
-foreach ($strreplace as $kiwod){
-	// echo $kiwod;
-			$sitemap_url_string = "$prefix_string$path_kb$slug$kiwod"."$postfix_string";
-	if (count($singletxt) == $per_page){
-		echo "jancuuk";
-	}else {
-			writeFile($sitemap_header.$sitemap_url_string.$sitemap_footer, $f, $fn);
-		// echo "wedus";
+$split = array_chunk($strreplace,$per_page);
+//echo print_r($split);
+$jumlah =count($split);
+for ($i=0;$i<$jumlah;$i++){
+	//echo print_r($split[$i-1]);
+	foreach ($split[$i] as $celeng[$i]){
+		echo $celeng[0]."<br>";
+	}
+}
+/*
+foreach ($split as $kiwod => $value){
+	if (is_array($value)){
+		echo $value;
+	if(is_int($kiwod)){
+		foreach ($value as $wedus){
+			//echo $wedus;
+	$sitemap_url_string = "$prefix_string$path_kb$slug$wedus"."$postfix_string";
+		}
+	//echo var_dump($value);
+			}
+		}else {
+	$sitemap_url_string = "$prefix_string$path_kb$slug$value"."$postfix_string";
+		echo "wedus";
 	}		
 		}
+		*/
 function writeFile($sitemap_string, $f, &$fn) // the new $fn is returned to the main code
 {
 	$result_status = "";
