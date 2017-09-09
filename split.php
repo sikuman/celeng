@@ -20,19 +20,38 @@
 		$sitemap_footer = "</urlset>\n";
 
 // echo $files_name;
-
+$sitemap_urls_string ="";
 $arraystrreplace= array("&"," ");
-$singletxt = array($files_name);
-$strreplace = str_replace($arraystrreplace,"-",$files_name); 
-$split = array_chunk($strreplace,$per_page);
-//echo print_r($split);
-$jumlah =count($split);
-for ($i=0;$i<$jumlah;$i++){
-	//echo print_r($split[$i-1]);
-	foreach ($split[$i] as $celeng[$i]){
-		echo $celeng[0]."<br>";
-	}
+//$split = array_chunk($strreplace,$per_page);
+$array_slice = array_slice($files_name,0,$per_page);
+$strreplace = str_replace($arraystrreplace,"-",$array_slice); 
+
+
+foreach ($files_name as $word){
+			//echo var_dump($word)."<br>";
+		$sitemap_url_string = "$prefix_string$path_kb$slug$word"."$postfix_string";
+		$sitemap_urls_string .= $sitemap_url_string;
+	echo "===================================================="."<br>";
+	echo $word."<br>";
+	echo "===================================================="."<br>";
+		if (count($word ==10){
+			writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f,$fn);
+			//echo $word[i];
 }
+	}
+/*
+$jumlah =count($split);
+foreach ($split as $celeng){
+		//echo var_dump($celeng);
+	for ($i=0;$i<$per_page;$i++){
+	//echo print_r($split[$i-1]);
+		//echo $celeng[0]."<br>";
+		//echo $value[0];
+		echo var_dump($celeng[0]);
+	}
+	$i++;
+}*/
+	//$i++;
 /*
 foreach ($split as $kiwod => $value){
 	if (is_array($value)){
@@ -53,18 +72,13 @@ foreach ($split as $kiwod => $value){
 function writeFile($sitemap_string, $f, &$fn) // the new $fn is returned to the main code
 {
 	$result_status = "";
-	$files_name= file_get_contents('keywords/keywords.txt' );
-	$singletxt = array($files_name);
-echo "panggil fungsi write";
 	$fp = @fopen("./sitemap/sitemap$fn.$f", "wb"); // Create Sitemap File
 
 	if($fp) // The sitemap file opened now, let's write to it.
 	{
-	// if($singletxt == $per_page){	
 		@fwrite($fp, $sitemap_string);
 		@fclose($fp);
 		$result_status = "success";
-		// }
 	}
 	else // Failed to Open File for Writing
 	{
