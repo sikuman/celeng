@@ -23,22 +23,39 @@
 $sitemap_urls_string ="";
 $arraystrreplace= array("&"," ");
 //$split = array_chunk($strreplace,$per_page);
-$array_slice = array_slice($files_name,0,$per_page);
-$strreplace = str_replace($arraystrreplace,"-",$array_slice); 
+//$array_slice = array_slice($files_name,0,$per_page);
+$strreplace = str_replace($arraystrreplace,"-",$files_name); 
 
 
-foreach ($files_name as $word){
+foreach ($strreplace as $word){
 			//echo var_dump($word)."<br>";
 		$sitemap_url_string = "$prefix_string$path_kb$slug$word"."$postfix_string";
 		$sitemap_urls_string .= $sitemap_url_string;
-	echo "===================================================="."<br>";
-	echo $word."<br>";
-	echo "===================================================="."<br>";
-		if (count($word ==10){
-			writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f,$fn);
-			//echo $word[i];
+	//echo "===================================================="."<br>";
+	//echo $sitemap_url_string."<br>";
+	//echo "===================================================="."<br>";
+		echo count($sitemap_url_string)."<br>";
+
 }
-	}
+foreach ($strreplace as $word){
+}
+for ($i =0; $i < count($sitemap_url_string);$i++)
+{
+	echo "===================================================="."<br>";
+	echo $sitemap_url_string."<br>";
+	echo count($sitemap_url_string)."<br>";
+	echo "===================================================="."<br>";
+if($sitemap_url_string % $per_page ==0){
+	//$sitemap_urls_string .= $sitemap_url_string;
+	writeFile($sitemap_header.$sitemap_url_string.$sitemap_footer, $f,$fn);
+}
+}
+/*
+while ($chunk = array_splice($strreplace,0,$per_page)){
+	writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f,$fn);
+}			//echo $word[i];
+	*/
+	
 /*
 $jumlah =count($split);
 foreach ($split as $celeng){
