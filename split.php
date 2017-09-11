@@ -22,70 +22,29 @@
 // echo $files_name;
 $sitemap_urls_string ="";
 $arraystrreplace= array("&"," ");
-//$split = array_chunk($strreplace,$per_page);
+$split = array_chunk($files_name,$per_page);
 //$array_slice = array_slice($files_name,0,$per_page);
-$strreplace = str_replace($arraystrreplace,"-",$files_name); 
-
-
-foreach ($strreplace as $word){
-			//echo var_dump($word)."<br>";
-		$sitemap_url_string = "$prefix_string$path_kb$slug$word"."$postfix_string";
-		$sitemap_urls_string .= $sitemap_url_string;
-	//echo "===================================================="."<br>";
-	//echo $sitemap_url_string."<br>";
-	//echo "===================================================="."<br>";
-		echo count($sitemap_url_string)."<br>";
-
-}
-foreach ($strreplace as $word){
-}
-for ($i =0; $i < count($sitemap_url_string);$i++)
+$strreplace = str_replace($arraystrreplace,"-",$files_name);
+$babi= count($split);
+echo $babi;
+$value="";
+$celeng="";
+for ($i =0 ;$i<count($split);$i++)
 {
-	echo "===================================================="."<br>";
-	echo $sitemap_url_string."<br>";
-	echo count($sitemap_url_string)."<br>";
-	echo "===================================================="."<br>";
-if($sitemap_url_string % $per_page ==0){
-	//$sitemap_urls_string .= $sitemap_url_string;
-	writeFile($sitemap_header.$sitemap_url_string.$sitemap_footer, $f,$fn);
+	 foreach ($split as $word)
+	 {
+		foreach ($word as $wedus ){
+		 $celeng .= $prefix_string.$wedus;
+		 }
+	 	writeFile($sitemap_header.$celeng.$sitemap_footer, $f,$fn);
+	 }
+
+$i++;
 }
-}
-/*
-while ($chunk = array_splice($strreplace,0,$per_page)){
-	writeFile($sitemap_header.$sitemap_urls_string.$sitemap_footer, $f,$fn);
-}			//echo $word[i];
-	*/
-	
-/*
-$jumlah =count($split);
-foreach ($split as $celeng){
-		//echo var_dump($celeng);
-	for ($i=0;$i<$per_page;$i++){
-	//echo print_r($split[$i-1]);
-		//echo $celeng[0]."<br>";
-		//echo $value[0];
-		echo var_dump($celeng[0]);
-	}
-	$i++;
-}*/
-	//$i++;
-/*
-foreach ($split as $kiwod => $value){
-	if (is_array($value)){
-		echo $value;
-	if(is_int($kiwod)){
-		foreach ($value as $wedus){
-			//echo $wedus;
-	$sitemap_url_string = "$prefix_string$path_kb$slug$wedus"."$postfix_string";
-		}
-	//echo var_dump($value);
-			}
-		}else {
-	$sitemap_url_string = "$prefix_string$path_kb$slug$value"."$postfix_string";
-		echo "wedus";
-	}		
-		}
-		*/
+//$explode =print_r($split,true);
+//	 	writeFile($sitemap_header.$explode.$sitemap_footer, $f,$fn);
+
+
 function writeFile($sitemap_string, $f, &$fn) // the new $fn is returned to the main code
 {
 	$result_status = "";
@@ -93,6 +52,7 @@ function writeFile($sitemap_string, $f, &$fn) // the new $fn is returned to the 
 
 	if($fp) // The sitemap file opened now, let's write to it.
 	{
+		echo $sitemap_string."<br>";
 		@fwrite($fp, $sitemap_string);
 		@fclose($fp);
 		$result_status = "success";
