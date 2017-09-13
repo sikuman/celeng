@@ -19,52 +19,20 @@
 			"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" xmlns:video=\"http://www.google.com/schemas/sitemap-video/1.1\">\n";
 		$sitemap_footer = "</urlset>\n";
 
-// echo $files_name;
-$sitemap_urls_string ="";
-$arraystrreplace= array("&"," ");
-$split = array_chunk($files_name,$per_page);
-//$array_slice = array_slice($files_name,0,$per_page);
-$strreplace = str_replace($arraystrreplace,"-",$files_name);
-$babi= count($split);
-echo $babi;
-$value="";
-$celeng="";
-for ($i =0 ;$i<count($split);$i++)
-{
-	 foreach ($split as $word)
-	 {
-		foreach ($word as $wedus ){
-		 $celeng .= $prefix_string.$wedus;
-		 }
-	 	writeFile($sitemap_header.$celeng.$sitemap_footer, $f,$fn);
-	 }
+foreach ($files_name as $word)
+		{
+	$arraystrreplace= array("&"," ");
+	$strreplace = str_replace($arraystrreplace,"-",trim($word)); 
+		$sitemap_url_string []= "$prefix_string$path_kb$slug$strreplace"."$postfix_string";
+		}	
 
-$i++;
-}
-//$explode =print_r($split,true);
-//	 	writeFile($sitemap_header.$explode.$sitemap_footer, $f,$fn);
-
-
-function writeFile($sitemap_string, $f, &$fn) // the new $fn is returned to the main code
-{
-	$result_status = "";
-	$fp = @fopen("./sitemap/sitemap$fn.$f", "wb"); // Create Sitemap File
-
-	if($fp) // The sitemap file opened now, let's write to it.
-	{
-		echo $sitemap_string."<br>";
-		@fwrite($fp, $sitemap_string);
-		@fclose($fp);
-		$result_status = "success";
-	}
-	else // Failed to Open File for Writing
-	{
-		$result_status = "failed";
-	}
-
-	print date("Y-m-d H:i:s").", result_status: $result_status, file: sitemap$fn.$f, len = ".strlen($sitemap_string)."<br>\n";
-
-	$fn++;
-}
-
+		
+		$counter = 0;
+		
+		while ($chunk = array_splice($sitemap_url_string,0,$per_page)){
+			$f=fopen("out".($counter++),"w");
+			fputs($f,implode("",$chunk));
+			// echo $chunk;
+			fclose($f);
+		}
 ?>
