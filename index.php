@@ -8,7 +8,7 @@
 	$changefreq ="daily";
 	$path_kb = "http://fullhdfree.xyz/";
 	$slug = "video/";
-	$per_page = 10; // max size
+	$per_page = 1; // max size
 
 	$fn = "1"; // file number, starts empty, then 1, 2, etc
 	
@@ -52,22 +52,23 @@ foreach ($files_name as $word)
 	$sitemapname = "sitemap";
 
 	$number = 0;
-foreach( $line_count as $key => $line ) {
-		for ($i=1; $i< $totalfile; $i++ ){	
-			$number++;
+// foreach( $line_count as $key => $line ) {
+		for ($i=0; $i < $totalfile; $i++ ){	
+			// $i++;
 			$sitemap[]= '
 			<sitemap>
 				<loc>' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml</loc>
 				<lastmod>' . date( 'c' ) . '</lastmod>
 			</sitemap>';
-			$namesitemap[]= '' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml';
 		}
-	}
+			// $namesitemap[]= '' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml';
+		// $i++;
+	// }
 	unlink('sitemapindex.xml');
-	$myfile = fopen('sitemapindex.xml','a+');
+	$myfile = fopen('sitemapindex.xml','wb');
 	fwrite ($myfile,'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
 	foreach ($sitemap as $hasil ){
-		// echo $hasil;
+		echo $hasil."<br>";
 			fwrite ($myfile,$hasil);
 		
 	}
