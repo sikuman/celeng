@@ -47,16 +47,12 @@ foreach ($files_name as $word)
 	$totalfile = count($files);
 	echo $totalfile;
 	foreach( $files as $file ) {
-		// $line_count[] = lines_count( $file );
 		$line_count[] = $totalfile;
 	}
 	$sitemapname = "sitemap";
 
-	// $rows = array_sum($totalfile);
-	// $total = ceil( $rows / $limit );
 	$number = 0;
 foreach( $line_count as $key => $line ) {
-		// for( $i = 1; $i <= ( ceil( $line / $limit ) ); $i++ ) {
 		for ($i=1; $i< $totalfile; $i++ ){	
 			$number++;
 			$sitemap[]= '
@@ -71,7 +67,7 @@ foreach( $line_count as $key => $line ) {
 	$myfile = fopen('sitemapindex.xml','a+');
 	fwrite ($myfile,'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
 	foreach ($sitemap as $hasil ){
-		echo $hasil;
+		// echo $hasil;
 			fwrite ($myfile,$hasil);
 		
 	}
