@@ -8,6 +8,7 @@
 	$changefreq ="daily";
 	$path_kb = "http://fullhdfree.xyz/";
 	$slug = "video/";
+	$extension = "html";
 	$per_page = 1; // max size
 
 	$fn = "1"; // file number, starts empty, then 1, 2, etc
@@ -23,7 +24,7 @@ foreach ($files_name as $word)
 		{
 			$arraystrreplace= array("&"," ");
 			$strreplace = str_replace($arraystrreplace,"-",trim($word)); 
-			$sitemap_url_string []= "$prefix_string$path_kb$slug$strreplace"."$postfix_string";
+			$sitemap_url_string []= "$prefix_string$path_kb$slug$strreplace.$extension"."$postfix_string";
 		}	
 		//delete all file in dir	
 		array_map('unlink',glob("./sitemap/*"));
@@ -55,11 +56,11 @@ foreach ($files_name as $word)
 // foreach( $line_count as $key => $line ) {
 		for ($i=0; $i < $totalfile; $i++ ){	
 			// $i++;
-			$sitemap[]= '
-			<sitemap>
-				<loc>' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml</loc>
-				<lastmod>' . date( 'c' ) . '</lastmod>
-			</sitemap>';
+$sitemap[]= '
+<sitemap>
+<loc>' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml</loc>
+<lastmod>' . date( 'c' ) . '</lastmod>
+</sitemap>';
 		}
 			// $namesitemap[]= '' . $path_kb . 'sitemap/' .$sitemapname. $i . '.xml';
 		// $i++;
@@ -69,7 +70,7 @@ foreach ($files_name as $word)
 	fwrite ($myfile,'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
 	foreach ($sitemap as $hasil ){
 		echo $hasil."<br>";
-			fwrite ($myfile,$hasil);
+	fwrite ($myfile,$hasil);
 		
 	}
 	$space = PHP_EOL;
